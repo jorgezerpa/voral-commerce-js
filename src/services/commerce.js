@@ -14,3 +14,8 @@ export const getProductsByCategory = async(categoryId) => {
     return result
 }
 
+export const getProducts = async() => {
+    const result = await commerce.products.list()
+    return result
+}
+
