@@ -1,12 +1,12 @@
 import { Navbar } from "@commons/Navbar"
 import { Footer } from "@commons/Footer"
-import { Login } from "@components/Login"
+import { Store } from "@components/Store"
 
 export default function Home() {
   return (
     <>
       <Navbar/>
-        <Login />
+        <Store />
       <Footer/>
     </>
   )
