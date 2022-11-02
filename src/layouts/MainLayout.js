@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { SidebarMenu } from '@commons/SidebarMenu'
+import React from 'react'
 
 export const MainLayout = ({children}) => {
   return (

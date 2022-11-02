@@ -10,7 +10,7 @@ const elements = [
     'developer'
 ]
 
-export const SidebarMenu = () => {
+export const ProductsGrid = ({ products }) => {
   return (
     <div>
         <ul>
