@@ -9,16 +9,16 @@ export const Store = () => {
 
   useEffect(()=>{
     (async()=>{
-        const { data } = await getProducts()
-        setProducts(data)
+      const { data } = await getProducts()
+      setProducts(data)
     })()
   }, [])
-
+  
   return (
-    <div className='w-full flex overflow-hidden h-screen'>
-      <div className='w-[120px]'>
-        <SidebarMenu setProducts={setProducts} />
-      </div>
+    <div className='relative w-full flex overflow-hidden h-screen'>
+      
+      <SidebarMenu setProducts={setProducts} />
+      
       <div className='w-full h-screen overflow-y-scroll'>
         <StoreBanner />
         <ProductsGrid products={products} />
