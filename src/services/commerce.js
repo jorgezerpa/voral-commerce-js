@@ -47,3 +47,8 @@ export const emptyCart = async() => {
     return result
 }
 
+export const createCheckout = async(cartId) => {
+    const result = await commerce.checkout.generateTokenFrom('cart', cartId)
+    return result
+}
+

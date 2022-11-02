@@ -10,7 +10,9 @@ export const Store = () => {
     <div className='relative w-full flex overflow-hidden h-screen'>
         <div className='z-50 p-2 rounded-[50%] absolute top-5 right-5 bg-pink-300'>
           <Link href="/cart" >
-              <CgShoppingBag size={32} color="#fff" />
+              <div>
+                <CgShoppingBag size={32} color="#fff" />
+              </div>
           </Link>
         </div>
       <SidebarMenu />
