@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { BiCategoryAlt } from 'react-icons/bi'
 import { getCategories, getProductsByCategory } from 'services/commerce'
-import Image from 'next/image'
 import { useWindowWidth } from 'hooks/useWindowWidth'
+import { useMainContext } from 'Context/mainContext'
 
 // const mockCategories = [
 //     'products',
@@ -13,7 +13,8 @@ import { useWindowWidth } from 'hooks/useWindowWidth'
 //     'developer'
 // ]
 
-export const SidebarMenu = ({ setProducts }) => {
+export const SidebarMenu = () => {
+    const { setProducts } = useMainContext()
     const [categories, setCategories] = useState([])
     const { width:windowWidth } = useWindowWidth()
     const [showSideBar, setShowSideBar] = useState(false)

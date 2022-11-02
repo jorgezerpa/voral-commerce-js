@@ -1,12 +1,15 @@
 import '../styles/globals.css'
 import { MainLayout } from '@layouts/MainLayout'
+import { MainContextContainer } from '../Context/mainContext'
 
 function MyApp({ Component, pageProps }) {
   return(
     <>
-    <MainLayout>
-      <Component {...pageProps} />
-    </MainLayout>
+    <MainContextContainer>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
+    </MainContextContainer>
     </>
   ) 
 }
