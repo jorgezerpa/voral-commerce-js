@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { SidebarMenu } from './SidebarMenu'
-import { ProductsGrid } from './productsGrid'
+import { ProductsGrid } from './ProductsGrid'
+import { StoreBanner } from './StoreBanner'
 import { getProducts } from 'services/commerce'
 
 export const Store = () => {
@@ -14,11 +15,12 @@ export const Store = () => {
   }, [])
 
   return (
-    <div className='w-full flex'>
+    <div className='w-full flex overflow-hidden h-screen'>
       <div className='w-[120px]'>
         <SidebarMenu setProducts={setProducts} />
       </div>
-      <div className='w-full'>
+      <div className='w-full h-screen overflow-y-scroll'>
+        <StoreBanner />
         <ProductsGrid products={products} />
       </div>
     </div>

@@ -29,7 +29,7 @@ export const SidebarMenu = ({ setProducts }) => {
 
     return (
         <div className='w-full py-[10px]'>
-            <ul className='w-full flex flex-col h-screen overflow-y-scroll align-middle'>
+            <ul className='w-full flex flex-col h-screen overflow-hidden overflow-y-scroll align-middle'>
                 { categories.map(item=>(
                     <div key={item.id} onClick={()=>handleClick(item.id)} className="w-[120px] mb-3 flex flex-col align-middle" >
                         <img className='w-[80px] rounded-lg mx-auto' src={item.assets[0].url} alt={item.name} />
