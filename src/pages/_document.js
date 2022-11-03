@@ -5,7 +5,6 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <Script src="https://www.paypalobjects.com/api/checkout.js"></Script>
       </Head>
       <body>
         <Main />
