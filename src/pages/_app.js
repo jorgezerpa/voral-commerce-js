@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import Script from 'next/script'
 import { MainLayout } from '@layouts/MainLayout'
 import { MainContextContainer } from '../Context/mainContext'
 
