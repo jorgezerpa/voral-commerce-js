@@ -1,15 +1,17 @@
 // Import the Commerce module
 import Commerce from '@chec/commerce.js';
-import Cookies from 'js-cookie'
+import { formatCaptureData } from 'utils/formatCaptureData';
 
 // Create a Commerce instance
 const commerce = new Commerce(process.env.NEXT_PUBLIC_COMMERCE_JS_PUBLIC_KEY);
 
+        //CATEGORIES
 export const getCategories = async() => {
     const result = await commerce.categories.list()
     return result
 }
 
+        //PRODUCTS
 export const getProductsByCategory = async(categoryId) => {
     const result = await commerce.products.list({ category_id:categoryId })
     return result
@@ -20,6 +22,8 @@ export const getProducts = async() => {
     return result
 }
 
+
+        //CART
 export const createCart = async() => {
     const result = await commerce.cart.retrieve()
     console.log(result)
@@ -47,12 +51,15 @@ export const emptyCart = async() => {
     return result
 }
 
+
+            //CHECKOUT  
 export const createCheckout = async(cartId) => {
     const result = await commerce.checkout.generateTokenFrom('cart', cartId)
     return result
 }
 
-export const captureOrder = async(checkoutToken, data) => {
+export const captureOrder = async(checkoutToken, formData) => {
+    const data = formatCaptureData(formData)
     const result = await commerce.checkout.capture(checkoutToken, data)
     return result
 }

@@ -1,48 +1,6 @@
 import React, { useRef } from 'react'
-import { useMainContext } from 'Context/mainContext'
-import { captureOrder } from 'services/commerce'
-import { formatLineItems } from 'utils/formatLineItem'
 
-export const CheckoutForm = () => {
-  const formRef= useRef(null)
-  const { setCheckout, checkoutToken, checkout } = useMainContext()
-
-  const handleSubmit = async(e) => {
-    e.preventDefault()
-    const formData = new FormData(formRef.current)
-    const firstname = formData.get('firstname')
-    const lastname = formData.get('lastname')
-    const email = formData.get('email')
-    const street = formData.get('street')
-    const town_city = formData.get('town_city')
-    const county_state = formData.get('county_state')
-    const postal_zip_code = formData.get('postal_zip_code')
-
-    const data = {
-        customer: {
-          firstname: firstname,
-          lastname: lastname,
-          email: email,
-        },
-        shipping: {
-          name: firstname+" "+lastname,
-          street: street,
-          town_city: town_city,
-          county_state: 'VE-L', //Mérida
-          postal_zip_code: postal_zip_code,
-          country: 'VE'
-        },
-        payment: {
-            gateway: 'paypal',
-            paypal: {
-              action: 'authorize',
-            },
-          },
-      }
-    const result = await captureOrder(checkoutToken, data)
-    setCheckout(result)
-  }
-
+export const CheckoutForm = ({ formRef, handleSubmit }) => {
   return (
       <div className="mx-auto block p-6 rounded-lg shadow-lg bg-white max-w-md">
         <form ref={formRef} onSubmit={handleSubmit}>
