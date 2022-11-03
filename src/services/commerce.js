@@ -52,3 +52,8 @@ export const createCheckout = async(cartId) => {
     return result
 }
 
+export const captureOrder = async(checkoutToken, data) => {
+    const result = await commerce.checkout.capture(checkoutToken, data)
+    return result
+}
+

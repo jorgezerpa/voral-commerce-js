@@ -4,20 +4,21 @@ import { useMainContext } from 'Context/mainContext'
 import { CheckoutForm } from '@components/checkoutForm'
 
 export const Checkout = () => {
-    const { cart, checkout, setCheckoutToken, setCheckout } = useMainContext()
+    const { cart, checkoutToken, setCheckoutToken, setCheckout } = useMainContext()
 
     useEffect(()=>{
-        createCheckout(cart?.id)
-            .then(data=>setCheckoutToken(data.id))
-
-        setCheckout(prev=>({...prev, line_items:cart?.line_items}))
+        createCheckout(cart?.id).then(data=>setCheckoutToken(data.id))
     }, [])
-console.log(checkout)
+
     return (
     <div className='py-10'>
-        <CheckoutForm />
+        <CheckoutForm/>
     </div>
   )
 }
 
 export default Checkout
+
+
+
+

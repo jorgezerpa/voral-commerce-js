@@ -1,11 +1,13 @@
 import React, { useRef } from 'react'
 import { useMainContext } from 'Context/mainContext'
+import { captureOrder } from 'services/commerce'
+import { formatLineItems } from 'utils/formatLineItem'
 
 export const CheckoutForm = () => {
   const formRef= useRef(null)
-  const { setCheckout } = useMainContext()
+  const { setCheckout, checkoutToken, checkout } = useMainContext()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault()
     const formData = new FormData(formRef.current)
     const firstname = formData.get('firstname')
@@ -16,14 +18,30 @@ export const CheckoutForm = () => {
     const county_state = formData.get('county_state')
     const postal_zip_code = formData.get('postal_zip_code')
 
-    setCheckout(prev=>(
-        {
-        ...prev,
-        shipping: {street, town_city, county_state, postal_zip_code, country:'Venezuela', name: `${firstname} ${lastname}`},
-        customer: {firstname, lastname, email}
-    }
-    ))
-}
+    const data = {
+        customer: {
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+        },
+        shipping: {
+          name: firstname+" "+lastname,
+          street: street,
+          town_city: town_city,
+          county_state: 'VE-L', //Mérida
+          postal_zip_code: postal_zip_code,
+          country: 'VE'
+        },
+        payment: {
+            gateway: 'paypal',
+            paypal: {
+              action: 'authorize',
+            },
+          },
+      }
+    const result = await captureOrder(checkoutToken, data)
+    setCheckout(result)
+  }
 
   return (
       <div className="mx-auto block p-6 rounded-lg shadow-lg bg-white max-w-md">
