@@ -14,6 +14,13 @@ export const Checkout = () => {
     const [approved, setApproved] = useState(false)
     
     useEffect(()=>{createCheckout(cart?.id).then(data=>setCheckoutToken(data))}, [])
+    
+    useEffect(()=>{
+        if(wasSubmitted){
+            captureOrder(checkoutToken.id, data).then(data => setPaymentId(data.payment_id))
+        }
+    }, [wasSubmitted])
+
     useEffect(()=>{
         if(approved){
             executeOrder(checkoutToken.id, data, paymentId, payerId)
@@ -30,13 +37,8 @@ export const Checkout = () => {
     }
 
     const onApprove = async(data, actions) => {
-        return actions.order.capture().then(details => {
-            console.log(details)
-            setPaymentId(details.purchase_units[0].payments.captures[0].id)
-            // setPaymentId('PAY-51028384J84281644LGFZXJQ')
             setPayerId(data.payerID)
             setApproved(true)
-        });
     } 
 
     return (

@@ -66,6 +66,7 @@ export const captureOrder = async(checkoutToken, formData) => {
 
 export const executeOrder = async(checkoutToken, formData, payment_id, payer_id) => {
     const data = formatExecuteData(formData, payment_id, payer_id )
+    console.log(data)
     const result = await commerce.checkout.capture(checkoutToken, data)
     return result
 }
