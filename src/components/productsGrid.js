@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { AddToCartButton } from './AddToCartButton'
-import { getProducts } from 'services/commerce'
+import React, { useEffect } from 'react'
 import { ProductCard } from './ProductCard'
 import { useMainContext } from 'Context/mainContext'
+import { getProducts as getProducts2 } from '../services/voralAPI'
 
 export const ProductsGrid = ({  }) => {
     const { products, setProducts } = useMainContext()
 
     useEffect(()=>{
       (async()=>{
-        const { data } = await getProducts()
-        setProducts(data)
+        const {data:{ data }} = await getProducts2()
+        setProducts(data.products)
       })()
     }, [])
 

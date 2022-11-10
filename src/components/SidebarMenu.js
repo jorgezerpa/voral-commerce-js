@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { BiCategoryAlt } from 'react-icons/bi'
-import { getCategories, getProductsByCategory } from 'services/commerce'
 import { useWindowWidth } from 'hooks/useWindowWidth'
 import { useMainContext } from 'Context/mainContext'
+import { getCategories, getProductsByCategory, getProducts } from '../services/voralAPI'
 
 // const mockCategories = [
 //     'products',
@@ -20,15 +20,21 @@ export const SidebarMenu = () => {
     const [showSideBar, setShowSideBar] = useState(false)
     useEffect(()=>{
         (async()=>{
-            const { data } = await getCategories()
+            const { data:{ data:{categories:data} } } = await getCategories()
             setCategories(data)
         })()
     }, [])
 
-    async function handleClick(categoryId){
+    async function handleClick(categoryId=false){
         setShowSideBar(false)
-        const { data } = await getProductsByCategory(categoryId)
-        setProducts(data)
+        if(!categoryId){
+            const { data:{ data:{products:data} } } = await getProducts()
+            setProducts(data)
+        } 
+        else{
+            const { data: { data:{ products:data } } } = await getProductsByCategory(categoryId) 
+            setProducts(data)
+        }         
     }
     
     function toggleShowSideBar(){
@@ -41,9 +47,13 @@ export const SidebarMenu = () => {
                 <BiCategoryAlt size={35} color="#fff" />
             </div>
             <ul className='w-full flex flex-col h-screen overflow-hidden overflow-y-scroll align-middle'>
+                <div onClick={()=>handleClick(null)} className="w-full mb-3 flex flex-col align-middle" >
+                    {/* <img className={`w-[${windowWidth>500?'80':'120'}px] rounded-lg mx-auto`} src={item.image} alt={item.name} /> */}
+                    <li className='text-sm text-center'>todo</li>
+                </div>
                 { categories.map(item=>(
                     <div key={item.id} onClick={()=>handleClick(item.id)} className="w-full mb-3 flex flex-col align-middle" >
-                        <img className={`w-[${windowWidth>500?'80':'120'}px] rounded-lg mx-auto`} src={item.assets[0].url} alt={item.name} />
+                        <img className={`w-[${windowWidth>500?'80':'120'}px] rounded-lg mx-auto`} src={item.image} alt={item.name} />
                         <li className='text-sm text-center'>{item.name}</li>
                     </div>
                 ))}
