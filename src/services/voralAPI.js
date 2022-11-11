@@ -47,8 +47,12 @@ export const getOrderTemplate = async(productId) => {
 }
 
 export const createOrder = async(order) => {
-    const result = await myAxios.post(endpoints.createOrder, order)
-    return result
+    try {
+        const result = await myAxios.post(endpoints.createOrder, order)
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
         //CART
