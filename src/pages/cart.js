@@ -7,7 +7,7 @@ import { CartCard } from '@components/CartCard'
 const Cart = () => {
     const { cart } = useMainContext()
 
-    if(!cart || cart.line_items.length<=0){
+    if(!cart || cart.products<=0){
         return (
             <p>no tienes productos brou :(</p>
         )
@@ -27,12 +27,12 @@ const Cart = () => {
             
 
             <div className='sm:inline-block sm:bg-gray-200 sm:p-10 rounded-xl mx-auto'>
-                {  cart?.line_items.map(item=>(
+                {  cart?.products.map(item=>(
                     <CartCard key={'cart'+item.id} item={item} />
                 ))}
 
                 <div>
-                    <p className='w-full flex justify-center align-middle mt-10 mb-2'>Total: {cart.subtotal.formatted_with_symbol}</p>
+                    <p className='w-full flex justify-center align-middle mt-10 mb-2'>Total: {cart.totalAmmount}</p>
                 </div>
 
                 <div className='w-full flex justify-center align-middle mb-10'>

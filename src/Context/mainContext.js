@@ -1,6 +1,6 @@
 import React, { useState, useContext, createContext, useEffect } from "react";
 import Cookies from "js-cookie";
-import { getCart } from "services/commerce";
+import { getCart } from 'services/voralAPI' 
 
 const MainContext = createContext()
 
@@ -9,13 +9,9 @@ const MainContextContainer = ({ children }) => {
     const [cart, setCart] = useState(null)
     const [checkout, setCheckout] = useState({})
     const [checkoutToken, setCheckoutToken] = useState(null)
-
+   
     useEffect(() => {
-        const cartIdCookie = Cookies.get('commercejs_cart_id')
-        if(cartIdCookie){
-            getCart(cartIdCookie)
-                .then(data => setCart(data))
-        }
+        getCart().then(cart => setCart(cart))
     }, [])
     
     return(

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { addToCart, removeFromCart, createCart } from 'services/commerce'
+// import { addToCart, removeFromCart, createCart } from 'services/commerce'
+import { addToCart, removeFromCart, createCart } from 'services/voralAPI'
 import { useMainContext } from 'Context/mainContext'
 
 export const AddToCartButton = ({ productId }) => {
@@ -8,7 +9,7 @@ export const AddToCartButton = ({ productId }) => {
 
     useEffect(()=>{
         if(cart){
-            setIsAdded(cart.line_items.findIndex(product=>product.product_id===productId)===-1 ? false : true )
+            setIsAdded(cart.products.findIndex(product=>product.id===productId)===-1 ? false : true )
         }
     }, [cart])
 
@@ -22,9 +23,10 @@ export const AddToCartButton = ({ productId }) => {
             const result = await addToCart(productId)
             setCart(result)
         } 
-        if(isAdded){
-            const itemId = cart.line_items.findIndex(product=>product.product_id===productId)
-            const result = await removeFromCart(cart.line_items[itemId].id)
+        if(isAdded){ //means-> deleteFromCart
+            const itemId = cart.products.findIndex(product=>product.id===productId)
+            //handle if itemId === -1
+            const result = await removeFromCart(productId)
             setCart(result)
         } 
     }
