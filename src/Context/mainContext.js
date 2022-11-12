@@ -9,13 +9,14 @@ const MainContextContainer = ({ children }) => {
     const [cart, setCart] = useState(null)
     const [checkout, setCheckout] = useState({})
     const [checkoutToken, setCheckoutToken] = useState(null)
-   
+    const [order, setOrder] = useState(null)
+
     useEffect(() => {
         getCart().then(cart => setCart(cart))
     }, [])
     
     return(
-    <MainContext.Provider value={{ products, setProducts, cart, setCart, checkout, setCheckout, checkoutToken, setCheckoutToken }}>
+    <MainContext.Provider value={{ products, setProducts, cart, setCart, checkout, setCheckout, checkoutToken, setCheckoutToken, order, setOrder }}>
         { children }
     </MainContext.Provider>
     )

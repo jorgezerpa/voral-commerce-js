@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 import { createOrder as createOrderApi } from 'services/voralAPI'
 import { useMainContext } from 'Context/mainContext'
 import { CheckoutForm } from '@components/checkoutForm'
@@ -7,13 +10,13 @@ import { useForm } from 'hooks/useForm'
 import Cookies from 'js-cookie'
 
 export const Checkout = () => {
-  const { formRef, handleSubmit, data:formData, wasSubmitted } = useForm()
-  const { cart } = useMainContext()
-  const [done, setDone] = useState({})
-  const [order, setOrder] = useState(null)
+    const router = useRouter()
+    const { formRef, handleSubmit, data:formData, wasSubmitted } = useForm()
+    const { cart, order, setOrder } = useMainContext()
+    const [done, setDone] = useState({})
 
     useEffect(()=>{
-        if(done) console.log(order) // redirect to "thanks" page, HAVE TO pass the order to show to client. Provide download option
+        if(done && order) router.push(`/thankYouPage`) // redirect to "thanks" page, HAVE TO pass the order to show to client. Provide download option
     }, [done])
 
     const handlePayment = async(paymentMethod, receipt) => {
@@ -44,6 +47,14 @@ export const Checkout = () => {
 
     return (
     <>
+    <div className='absolute top-2 left-2 z-50'>
+        <Link href="/">
+            <div className='flex gap-2'>
+                <AiOutlineArrowLeft size={30} />
+                <p className='text-xl block font-bold'>Volver</p>
+            </div>
+        </Link>
+    </div>
     <div className='py-10'>
         <CheckoutForm formRef={formRef} handleSubmit={handleSubmit}/>
         <PaymentMethods handlePayment={handlePayment} totalAmmount={cart?.totalAmmount} />

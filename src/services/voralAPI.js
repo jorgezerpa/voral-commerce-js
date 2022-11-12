@@ -53,7 +53,7 @@ export const getOrderTemplate = async( productId) => {
 
 export const createOrder = async(order) => {
     try {
-        const result = await myAxios.post(endpoints.createOrder, order)
+        const { data: { data: { result } } } = await myAxios.post(endpoints.createOrder, order)
         return result
     } catch (error) {
         console.log(error)
