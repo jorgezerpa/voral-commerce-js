@@ -36,12 +36,17 @@ export const getProducts = async() => {
 }
 
 export const getProduct = async(productId) => {
-    const result = await myAxios.get(endpoints.getProduct(productId))
-    return result
+    try {
+        parseInt(productId)
+        const { data:{ data: { product } } } = await myAxios.get(endpoints.getProduct(productId))
+        return product
+    } catch (error) {
+        console.log(error)
+    }
 }
 
         //ORDERS
-export const getOrderTemplate = async(productId) => {
+export const getOrderTemplate = async( productId) => {
     const result = await myAxios.get(endpoints.getOrderTemplate)
     return result
 }

@@ -33,8 +33,11 @@ export const AddToCartButton = ({ productId }) => {
 
     return (
         <button 
-            className="absolute rounded-lg bottom-0 w-[230px] text-sm text-white font-semibold py-1 px-2 border-none bg-pink-400 shadow-sm"
-            onClick={()=> handleClick(productId)}
+            className="rounded-lg w-[230px] text-sm text-white font-semibold py-1 px-2 border-none bg-pink-400 shadow-sm"
+            onClick={(e)=> {
+                e.stopPropagation()
+                handleClick(productId)}
+            } 
         >
             { isAdded ? 'Remover' : 'Agregar' }
         </button>
