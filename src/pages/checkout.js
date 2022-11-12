@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { PayPalButtons,  PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { createOrder as createOrderApi } from 'services/voralAPI'
 import { useMainContext } from 'Context/mainContext'
 import { CheckoutForm } from '@components/checkoutForm'
@@ -12,21 +11,12 @@ export const Checkout = () => {
   const { cart } = useMainContext()
   const [done, setDone] = useState({})
   const [order, setOrder] = useState(null)
-  console.log(formData)
 
     useEffect(()=>{
-        if(done) console.log(order)
+        if(done) console.log(order) // redirect to "thanks" page, HAVE TO pass the order to show to client. Provide download option
     }, [done])
 
-    const createOrder = (data, actions) => {
-        return actions.order.create({
-            currency_code: "USD",   
-            purchase_units: [{amount:{value:cart.totalAmmount, currency_code:"USD" }}],
-        }).then(orderId=> orderId)
-    }
-
-    const onApprove = async(data, actions) => {
-        const receipt = await actions.order.capture()
+    const handlePayment = async(paymentMethod, receipt) => {
         const orderInfo = {
             buyer: {
                 firstName: formData.firstname,
@@ -42,8 +32,8 @@ export const Checkout = () => {
                 }
             },
             products: cart.products.map(product=>({ id:product.id, name:product.name, price:product.price })),
-            totalAmount: 137, //cart.totalAmmount, API have a bug
-            paymentMethod: "paypal", 
+            totalAmount: cart.totalAmmount,
+            paymentMethod: paymentMethod, 
             paymentMethodReceipt: JSON.stringify(receipt)
         }
         const order = await createOrderApi(orderInfo) 
@@ -51,16 +41,13 @@ export const Checkout = () => {
         Cookies.remove('voral_cart_id')
         setDone(true)
     } 
+
     return (
     <>
     <div className='py-10'>
         <CheckoutForm formRef={formRef} handleSubmit={handleSubmit}/>
-        <PaymentMethods />
-        { wasSubmitted && (
-            <PayPalScriptProvider options={{ "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }} >
-                <PayPalButtons createOrder={createOrder} onApprove={onApprove}></PayPalButtons>
-            </PayPalScriptProvider>
-        )}
+        <PaymentMethods handlePayment={handlePayment} totalAmmount={cart?.totalAmmount} />
+
     </div>
     </>
   )
