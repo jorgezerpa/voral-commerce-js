@@ -16,6 +16,7 @@ export const endpoints = {
     //orders
     getOrderTemplate:`${BASEPATH}/${VERSION}/${BASEENDPOINT}/orders/template`,
     createOrder:`${BASEPATH}/${VERSION}/${BASEENDPOINT}/orders`,
+    getOrderFile:(orderId)=>`${BASEPATH}/${VERSION}/${BASEENDPOINT}/orders/getOrderFile/${orderId}`,
  
     //cart
     createCart: `${BASEPATH}/${VERSION}/${BASEENDPOINT}/cart`,

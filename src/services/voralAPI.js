@@ -46,9 +46,15 @@ export const getProduct = async(productId) => {
 }
 
         //ORDERS
-export const getOrderTemplate = async( productId) => {
+export const getOrderTemplate = async() => {
     const result = await myAxios.get(endpoints.getOrderTemplate)
     return result
+}
+
+export const getOrderFile = async(orderId) => {
+    const result = await myAxios.get(endpoints.getOrderFile(orderId), { responseType:'blob' })
+    const href = URL.createObjectURL(result.data);
+    return href
 }
 
 export const createOrder = async(order) => {

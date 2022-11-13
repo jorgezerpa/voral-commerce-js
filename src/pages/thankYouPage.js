@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMainContext } from 'Context/mainContext'
 import { AiOutlineInstagram, AiOutlineWhatsApp, AiOutlineFacebook } from 'react-icons/ai'
-
+import { getOrderFile } from 'services/voralAPI'
 
 const ThankYouPage = () => {
     const { order } = useMainContext()
-    console.log(order)
+    const [downloadURL, setDownloadURL] = useState(null)
+    
+    const handleClick = async() => {
+        const linkToDownload = await getOrderFile(order.id)
+        setDownloadURL(linkToDownload)
+    }
 
     return (
         <div className='flex justify-center items-center w-full min-h-screen p-5'>
@@ -16,7 +21,9 @@ const ThankYouPage = () => {
                     <p className='text center text-md font-semibold' >alguna frase que haga que el cliente compre otra vez yeahhhhh!</p>
                 </div>
                 <div className='block mt-9 mb-6'>
-                    <button className='bg-pink-400 px-5 py-3 text-white font-semibold rounded-lg' >Descarga tu factura</button>
+                    <button onClick={handleClick} className='bg-pink-400 px-5 py-3 text-white font-semibold rounded-lg' >Obtener Factura</button>
+                    <div></div>
+                    { downloadURL && <a href={downloadURL} download='ordenVoral.pdf' className='block decoration-pink-400 pt-5 text-center font-semibold'>descargar</a> }
                 </div>
                 <div className='block pb-3'>
                     <p className='text-center font-bold text-xl mb-1'>¡Recuerda seguirnos!</p>
