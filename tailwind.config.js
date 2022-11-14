@@ -14,6 +14,17 @@ module.exports = {
       maxWidth: {
         full:'100vw'
       }
+    },
+    extend: {
+      keyframes: {
+        scaling: {
+          '0%, 100%': { transform: 'scale(.0)', opacity:1 },
+          '50%': { transform: 'scale(1)', opacity:.8 },
+        }
+      },
+      animation: {
+        scaling: 'scaling .5s ease-in-out infinite',
+      },
     }
   },
 }
